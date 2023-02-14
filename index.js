@@ -19,6 +19,17 @@ mongoose.connect('mongodb://127.0.0.1:27017/contract')
 
 app.use('/api', contractRouter)
 
+// catch all routes
+app.use((req, res, next) => {
+  res.sendStatus(404)
+  next(404)
+})
+
+// error handler
+app.use((err, req, res, next) => {
+  res.send(err)
+})
+
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Server start listening at port ${process.env.SERVER_PORT}`)
 })

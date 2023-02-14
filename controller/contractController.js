@@ -1,5 +1,12 @@
+import { Contract } from '../models/contract.js'
+
 export const getAllContract = async (req, res, next) => {
-  res.send('Get All Contract')
+  const newc = new Contract({ username: 'rsdf', phone: 'sdf' })
+
+  newc.save().then(() => {
+    res.send('Data Saved')
+  })
+  // res.send('Get All Contract')
 }
 
 export const getAContract = async (req, res) => {
