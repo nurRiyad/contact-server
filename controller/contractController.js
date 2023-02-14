@@ -1,4 +1,4 @@
-export const getAllContract = async (req, res) => {
+export const getAllContract = async (req, res, next) => {
   res.send('Get All Contract')
 }
 
