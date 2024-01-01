@@ -1,1 +1,0 @@
-# contact-management-server
