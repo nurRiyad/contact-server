@@ -18,6 +18,4 @@ route.delete('/:contractId', (req, res, next) => {
   res.send('This is contract id api');
 });
 
-route.post('');
-
 module.exports = route;
