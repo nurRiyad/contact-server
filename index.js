@@ -1,9 +1,15 @@
 const express = require('express');
 const apiRoutes = require('./routes');
+const initMongoDb = require('./utils/initMongo');
 
+// for reading .env file
 require('dotenv').config();
 
+// init express server
 const app = express();
+
+// connect mongodb
+initMongoDb();
 
 app.use('/api/v1', apiRoutes);
 
