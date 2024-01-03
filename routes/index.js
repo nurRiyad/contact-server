@@ -1,5 +1,5 @@
 const express = require('express')
-const contract = require('./Contract.route')
+const contract = require('./contract')
 
 const router = express.Router()
 
