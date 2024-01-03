@@ -1,32 +1,37 @@
-const express = require('express');
-const apiRoutes = require('./routes');
-const initMongoDb = require('./utils/initMongo');
+const express = require('express')
+const apiRoutes = require('./routes')
+const initMongoDb = require('./utils/initMongo')
 
 // for reading .env file
-require('dotenv').config();
+require('dotenv').config()
 
 // init express server
-const app = express();
+const app = express()
+
+// for parsing application/json
+app.use(express.json())
+// for parsing application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }))
 
 // connect mongodb
-initMongoDb();
+initMongoDb()
 
-app.use('/api/v1', apiRoutes);
+app.use('/api/v1', apiRoutes)
 
 // Catch all route
 app.use((req, res, next) => {
-  next({ status: 404, message: 'Page Not Found' });
-});
+  next({ status: 404, message: 'Page Not Found' })
+})
 
 // Error Handler
 app.use((err, req, res, next) => {
-  res.status(err.status || 500);
+  res.status(err.status || 500)
   res.send({
     status: err.status || 500,
-    message: err.message || 'Internal Server Error',
-  });
-});
+    message: err.message || 'Internal Server Error'
+  })
+})
 
 app.listen(process.env.PORT, () => {
-  console.log(`Server start listening on port ${process.env.PORT}`);
-});
+  console.log(`Server start listening on port ${process.env.PORT}`)
+})

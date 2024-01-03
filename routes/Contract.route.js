@@ -1,33 +1,76 @@
-const express = require('express');
-const User = require('../model/user');
+const express = require('express')
+const Contract = require('../model/contract')
 
-const route = express.Router();
+const route = express.Router()
 
+// Get all the contract
 route.get('/', async (req, res, next) => {
-  const users = await User.find();
-  res.send(users);
-});
-
-route.get('/:contractId', (req, res, next) => {
-  res.send('send a single contract');
-});
-
-route.post('/:contractId', async (req, res, next) => {
   try {
-    const riyad = new User({ username: 'riyad' });
-    const data = await riyad.save();
-    res.send(data);
+    const users = await Contract.find()
+    res.send(users)
   } catch (error) {
-    console.log(error);
+    next(error)
   }
-});
+})
 
-route.patch('/:contractId', (req, res, next) => {
-  res.send('This is contract id api');
-});
+// Add a new contract
+route.post('/', async (req, res, next) => {
+  try {
+    const { number, name, address } = req.body || {}
+    if (!number || !name) next({ status: 422, message: 'Bad Request' })
+    else {
+      const contract = new Contract({ number, name, address })
+      const data = await contract.save()
+      res.send(data)
+    }
+  } catch (error) {
+    if (error.code === 11000) next({ status: 409, message: 'Number already exist' })
+    else next(error)
+  }
+})
 
-route.delete('/:contractId', (req, res, next) => {
-  res.send('This is contract id api');
-});
+// Get a specific contract
+route.get('/:contractId', async (req, res, next) => {
+  try {
+    const { contractId } = req.params
+    const contract = await Contract.findOne({ number: contractId }, { number: 1, name: 1, _id: 0 })
+    if (contract) res.send(contract)
+    else next({ status: 404, message: 'Contract' })
+  } catch (error) {
+    next(error)
+  }
+})
 
-module.exports = route;
+// Update a contract
+route.patch('/:contractId', async (req, res, next) => {
+  try {
+    const { name, address } = req.body
+    if (!name && !address) next({ status: 400, message: 'Bad request' })
+    else {
+      const { contractId } = req.params
+      const contract = await Contract.findOneAndUpdate(
+        { number: contractId },
+        { name, address },
+        { returnDocument: 'after' }
+      )
+      if (contract) res.send(contract)
+      else next({ status: 404, message: 'ContractId not found' })
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+// delete a contract
+route.delete('/:contractId', async (req, res, next) => {
+  try {
+    const { contractId } = req.params
+    const contract = await Contract.findOneAndDelete({ number: contractId })
+    if (contract) res.send(contract)
+    else next({ status: 404, message: 'Contract not found' })
+  } catch (error) {
+    next(error)
+  }
+})
+
+module.exports = route

@@ -2,19 +2,19 @@ module.exports = {
   env: {
     node: true,
     commonjs: true,
-    es2021: true,
+    es2021: true
   },
   extends: ['standard', 'prettier'],
   overrides: [
     {
       files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
-        sourceType: 'script',
-      },
-    },
+        sourceType: 'script'
+      }
+    }
   ],
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 'latest'
   },
-  rules: {},
-};
+  rules: {}
+}
