@@ -24,7 +24,7 @@ route.post('/', async (req, res, next) => {
       res.send(data)
     }
   } catch (error) {
-    if (error.code === 11000) next({ status: 409, message: 'Number already exist' })
+    if (error.code === 11000) next({ status: 409, message: 'Contract already exist' })
     else next(error)
   }
 })
