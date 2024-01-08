@@ -1,0 +1,26 @@
+GET http://localhost:3000/api/v1/contract
+
+###
+POST http://localhost:3000/api/v1/auth/signup
+Content-Type: application/json
+
+{
+  "email": "abc33@gmail.com",
+  "username": "riayd",
+  "password": "1234"
+}
+
+###
+POST http://localhost:3000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "abc33@gmail.com",
+  "password": "1234"
+}
+
+
+###
+GET  http://localhost:3000/api/v1/auth/logout
+Content-Type: application/json
+
