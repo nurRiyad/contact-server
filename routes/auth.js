@@ -22,12 +22,27 @@ route.post('/signup', async (req, res, next) => {
   }
 })
 
-route.post('/login', (req, res) => {
-  res.send('Login as user')
+route.post('/login', async (req, res, next) => {
+  try {
+    const { email, password } = req.body
+    if (!email || !password) next({ status: 400, message: 'Bad request' })
+    else {
+      const secret = process.env.HASH_SECRET
+      const hashedPass = createHmac('sha256', secret).update(password).digest('hex')
+
+      const user = User.findOne({})
+      const data = await user.findOne({ email, password: hashedPass }, { __v: 0, password: 0 })
+      if (data) res.send(data)
+      else next({ status: 401, message: 'Email or Password not matched' })
+    }
+  } catch (error) {
+    if (error.code === 11000) next({ status: 409, message: 'User already exist' })
+    else next(error)
+  }
 })
 
-route.get('/logout', (req, res) => {
-  res.send('Logout as user')
+route.get('/logout', async (req, res, next) => {
+  res.send('Need to remove the json web token')
 })
 
 module.exports = route

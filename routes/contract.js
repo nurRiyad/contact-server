@@ -35,7 +35,7 @@ route.get('/:contractId', async (req, res, next) => {
     const { contractId } = req.params
     const contract = await Contract.findOne({ number: contractId }, { number: 1, name: 1, _id: 0 })
     if (contract) res.send(contract)
-    else next({ status: 404, message: 'Contract' })
+    else next({ status: 404, message: 'No resource found' })
   } catch (error) {
     next(error)
   }
