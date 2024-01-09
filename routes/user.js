@@ -1,9 +1,10 @@
 const express = require('express')
 const User = require('../model/user')
+const auth = require('../middleware/auth')
 
 const route = express.Router()
 
-route.get('/', async (req, res, next) => {
+route.get('/', auth, async (req, res, next) => {
   try {
     const { email } = req.params
     const user = await User.findOne({ email }, { number: 1, name: 1, _id: 0 })
@@ -14,7 +15,7 @@ route.get('/', async (req, res, next) => {
   }
 })
 
-route.patch('/', async (req, res, next) => {
+route.patch('/', auth, async (req, res, next) => {
   try {
     const { name, password, email } = req.body
     if (!name && !password) next({ status: 400, message: 'Bad request' })
@@ -28,7 +29,7 @@ route.patch('/', async (req, res, next) => {
   }
 })
 
-route.delete('/', async (req, res, next) => {
+route.delete('/', auth, async (req, res, next) => {
   try {
     const { userId } = req.params
     const contract = await User.findOneAndDelete({ id: userId })

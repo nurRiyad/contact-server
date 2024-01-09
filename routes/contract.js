@@ -1,11 +1,13 @@
 const express = require('express')
 const Contract = require('../model/contract')
+const auth = require('../middleware/auth')
 
 const route = express.Router()
 
 // Get all the contract
-route.get('/', async (req, res, next) => {
+route.get('/', auth, async (req, res, next) => {
   try {
+    console.log(req.user)
     const users = await Contract.find()
     res.send(users)
   } catch (error) {
@@ -14,7 +16,7 @@ route.get('/', async (req, res, next) => {
 })
 
 // Add a new contract
-route.post('/', async (req, res, next) => {
+route.post('/', auth, async (req, res, next) => {
   try {
     const { number, name, address } = req.body || {}
     if (!number || !name) next({ status: 422, message: 'Bad Request' })
@@ -30,7 +32,7 @@ route.post('/', async (req, res, next) => {
 })
 
 // Get a specific contract
-route.get('/:contractId', async (req, res, next) => {
+route.get('/:contractId', auth, async (req, res, next) => {
   try {
     const { contractId } = req.params
     const contract = await Contract.findOne({ number: contractId }, { number: 1, name: 1, _id: 0 })
@@ -42,7 +44,7 @@ route.get('/:contractId', async (req, res, next) => {
 })
 
 // Update a contract
-route.patch('/:contractId', async (req, res, next) => {
+route.patch('/:contractId', auth, async (req, res, next) => {
   try {
     const { name, address } = req.body
     if (!name && !address) next({ status: 400, message: 'Bad request' })
@@ -62,7 +64,7 @@ route.patch('/:contractId', async (req, res, next) => {
 })
 
 // delete a contract
-route.delete('/:contractId', async (req, res, next) => {
+route.delete('/:contractId', auth, async (req, res, next) => {
   try {
     const { contractId } = req.params
     const contract = await Contract.findOneAndDelete({ number: contractId })
