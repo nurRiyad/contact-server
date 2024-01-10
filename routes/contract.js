@@ -7,7 +7,6 @@ const route = express.Router()
 // Get all the contract
 route.get('/', auth, async (req, res, next) => {
   try {
-    console.log(req.user)
     const users = await Contract.find()
     res.send(users)
   } catch (error) {

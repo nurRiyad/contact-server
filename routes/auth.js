@@ -1,17 +1,29 @@
 const express = require('express')
 const User = require('../model/user')
 const jwt = require('jsonwebtoken')
-const { createHmac } = require('node:crypto')
+const joi = require('joi')
+const hashAString = require('../utils/hash')
 
 const route = express.Router()
 
 route.post('/signup', async (req, res, next) => {
   try {
+    const schema = joi.object({
+      email: joi.string().email().required(),
+      password: joi.string().min(4).required(),
+      username: joi.string().min(3).alphanum().required()
+    })
+
     const { email, username, password } = req.body
+    const { error, value } = schema.validate({ email, username, password })
+
+    if (error) next(error)
+
+    console.log({ error, value })
+
     if (!email || !username || !password) next({ status: 400, message: 'Bad request' })
     else {
-      const secret = process.env.HASH_SECRET
-      const hashedPass = createHmac('sha256', secret).update(password).digest('hex')
+      const hashedPass = hashAString(password)
 
       const user = new User({ email, username, password: hashedPass })
       const data = await user.save()
@@ -32,8 +44,7 @@ route.post('/login', async (req, res, next) => {
     const { email, password } = req.body
     if (!email || !password) next({ status: 400, message: 'Bad request' })
     else {
-      const secret = process.env.HASH_SECRET
-      const hashedPass = createHmac('sha256', secret).update(password).digest('hex')
+      const hashedPass = hashAString(password)
 
       const user = await User.findOne({ email, password: hashedPass }, { __v: 0, password: 0 })
       if (user) {
