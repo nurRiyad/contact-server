@@ -20,7 +20,7 @@ app.use('/api/v1', apiRoutes)
 
 // Catch all route
 app.use((req, res, next) => {
-  next({ status: 404, message: 'Page Not Found' })
+  next({ status: 404, message: 'Resource Not Found' })
 })
 
 // Error Handler

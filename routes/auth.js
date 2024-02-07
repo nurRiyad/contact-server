@@ -3,6 +3,7 @@ const User = require('../model/user')
 const jwt = require('jsonwebtoken')
 const joi = require('joi')
 const hashAString = require('../utils/hash')
+const authMiddleware = require('../middleware/auth')
 
 const route = express.Router()
 
@@ -15,13 +16,13 @@ route.post('/signup', async (req, res, next) => {
     })
 
     const { email, username, password } = req.body
-    const { error, value } = schema.validate({ email, username, password })
+    const { error } = schema.validate({ email, username, password })
 
-    if (error) next(error)
-
-    console.log({ error, value })
-
-    if (!email || !username || !password) next({ status: 400, message: 'Bad request' })
+    if (error)
+      next({
+        status: 400,
+        message: error.message || 'Band request'
+      })
     else {
       const hashedPass = hashAString(password)
 
@@ -41,12 +42,23 @@ route.post('/signup', async (req, res, next) => {
 
 route.post('/login', async (req, res, next) => {
   try {
+    const schema = joi.object({
+      email: joi.string().email().required(),
+      password: joi.string().min(4).required()
+    })
+
     const { email, password } = req.body
-    if (!email || !password) next({ status: 400, message: 'Bad request' })
+    const { error } = schema.validate({ email, password })
+
+    if (error)
+      next({
+        status: 400,
+        message: error.message || 'Band request'
+      })
     else {
       const hashedPass = hashAString(password)
+      const user = await User.findOne({ email, password: hashedPass })
 
-      const user = await User.findOne({ email, password: hashedPass }, { __v: 0, password: 0 })
       if (user) {
         const payload = { email: user.email, username: user.username }
         const key = jwt.sign(payload, process.env.JWT_SECRET)
@@ -55,12 +67,11 @@ route.post('/login', async (req, res, next) => {
       } else next({ status: 401, message: 'Email or Password not matched' })
     }
   } catch (error) {
-    if (error.code === 11000) next({ status: 409, message: 'User already exist' })
-    else next(error)
+    next(error)
   }
 })
 
-route.get('/logout', async (req, res, next) => {
+route.get('/logout', authMiddleware, async (req, res, next) => {
   res.clearCookie('accessToken')
   res.json({
     status: 200
