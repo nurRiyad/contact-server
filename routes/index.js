@@ -5,8 +5,8 @@ const auth = require('./auth')
 
 const router = express.Router()
 
-router.use('/contract', contract)
-router.use('/user', user)
 router.use('/auth', auth)
+router.use('/user', user)
+router.use('/contract', contract)
 
 module.exports = router

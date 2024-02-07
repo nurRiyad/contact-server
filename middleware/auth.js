@@ -3,15 +3,15 @@ const jwt = require('jsonwebtoken')
 const auth = async (req, res, next) => {
   try {
     const { accessToken } = req.cookies
-    if (!accessToken) next({ status: 401, message: 'Unauthorize' })
+    if (!accessToken) return next({ status: 401, message: 'Unauthorize' })
 
     const val = await jwt.verify(accessToken, process.env.JWT_SECRET)
     req.user = { ...val, isLoggedIn: true }
 
-    next()
+    return next()
   } catch (error) {
-    if (error instanceof jwt.JsonWebTokenError) next({ status: 401, message: 'Unauthorize' })
-    else next(error)
+    if (error instanceof jwt.JsonWebTokenError) return next({ status: 401, message: 'Unauthorize' })
+    else return next(error)
   }
 }
 

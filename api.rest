@@ -4,7 +4,7 @@ POST http://localhost:3000/api/v1/auth/signup
 Content-Type: application/json
 
 {
-  "email": "riyad1@gmail.com",
+  "email": "riyad3@gmail.com",
   "username": "riayd",
   "password": "1234"
 }
@@ -14,7 +14,7 @@ POST http://localhost:3000/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "email": "abc33@gmail.com",
+  "email": "riyad3@gmail.com",
   "password": "1234"
 }
 
