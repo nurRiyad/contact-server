@@ -1,7 +1,73 @@
-const getAllContracts = (req, res, next) => {
-  res.send([1, 2, 3, 4, 5])
+const Contract = require('../model/contract')
+
+// Get all the contract
+const getAllContract = async (req, res, next) => {
+  try {
+    const users = await Contract.find()
+    res.send(users)
+  } catch (error) {
+    next(error)
+  }
 }
 
-module.exports = {
-  getAllContracts
+// Add a new contract
+const addANewContract = async (req, res, next) => {
+  try {
+    const { number, name, address } = req.body || {}
+    if (!number || !name) next({ status: 422, message: 'Bad Request' })
+    else {
+      const contract = new Contract({ number, name, address })
+      const data = await contract.save()
+      res.send(data)
+    }
+  } catch (error) {
+    if (error.code === 11000) next({ status: 409, message: 'Contract already exist' })
+    else next(error)
+  }
 }
+
+// Get a specific contract
+const getAContract = async (req, res, next) => {
+  try {
+    const { contractId } = req.params
+    const contract = await Contract.findOne({ number: contractId }, { number: 1, name: 1, _id: 0 })
+    if (contract) res.send(contract)
+    else next({ status: 404, message: 'No resource found' })
+  } catch (error) {
+    next(error)
+  }
+}
+
+// Update a contract
+const updateAContract = async (req, res, next) => {
+  try {
+    const { name, address } = req.body
+    if (!name && !address) next({ status: 400, message: 'Bad request' })
+    else {
+      const { contractId } = req.params
+      const contract = await Contract.findOneAndUpdate(
+        { number: contractId },
+        { name, address },
+        { returnDocument: 'after' }
+      )
+      if (contract) res.send(contract)
+      else next({ status: 404, message: 'ContractId not found' })
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
+// delete a contract
+const deleteAContract = async (req, res, next) => {
+  try {
+    const { contractId } = req.params
+    const contract = await Contract.findOneAndDelete({ number: contractId })
+    if (contract) res.send(contract)
+    else next({ status: 404, message: 'Contract not found' })
+  } catch (error) {
+    next(error)
+  }
+}
+
+module.exports = { getAllContract, addANewContract, getAContract, updateAContract, deleteAContract }

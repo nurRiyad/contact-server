@@ -1,77 +1,22 @@
 const express = require('express')
-const Contract = require('../model/contract')
 const auth = require('../middleware/auth')
+const contractController = require('../controllers/contracts')
 
 const route = express.Router()
 
 // Get all the contract
-route.get('/', auth, async (req, res, next) => {
-  try {
-    const users = await Contract.find()
-    res.send(users)
-  } catch (error) {
-    next(error)
-  }
-})
+route.get('/', auth, async (req, res, next) => await contractController.getAllContract(req, res, next))
 
 // Add a new contract
-route.post('/', auth, async (req, res, next) => {
-  try {
-    const { number, name, address } = req.body || {}
-    if (!number || !name) next({ status: 422, message: 'Bad Request' })
-    else {
-      const contract = new Contract({ number, name, address })
-      const data = await contract.save()
-      res.send(data)
-    }
-  } catch (error) {
-    if (error.code === 11000) next({ status: 409, message: 'Contract already exist' })
-    else next(error)
-  }
-})
+route.post('/', auth, async (req, res, next) => await contractController.addANewContract(req, res, next))
 
 // Get a specific contract
-route.get('/:contractId', auth, async (req, res, next) => {
-  try {
-    const { contractId } = req.params
-    const contract = await Contract.findOne({ number: contractId }, { number: 1, name: 1, _id: 0 })
-    if (contract) res.send(contract)
-    else next({ status: 404, message: 'No resource found' })
-  } catch (error) {
-    next(error)
-  }
-})
+route.get('/:contractId', auth, async (req, res, next) => await contractController.getAContract(req, res, next))
 
 // Update a contract
-route.patch('/:contractId', auth, async (req, res, next) => {
-  try {
-    const { name, address } = req.body
-    if (!name && !address) next({ status: 400, message: 'Bad request' })
-    else {
-      const { contractId } = req.params
-      const contract = await Contract.findOneAndUpdate(
-        { number: contractId },
-        { name, address },
-        { returnDocument: 'after' }
-      )
-      if (contract) res.send(contract)
-      else next({ status: 404, message: 'ContractId not found' })
-    }
-  } catch (error) {
-    next(error)
-  }
-})
+route.patch('/:contractId', auth, async (req, res, next) => await contractController.updateAContract(req, res, next))
 
 // delete a contract
-route.delete('/:contractId', auth, async (req, res, next) => {
-  try {
-    const { contractId } = req.params
-    const contract = await Contract.findOneAndDelete({ number: contractId })
-    if (contract) res.send(contract)
-    else next({ status: 404, message: 'Contract not found' })
-  } catch (error) {
-    next(error)
-  }
-})
+route.delete('/:contractId', auth, async (req, res, next) => await contractController.deleteAContract(req, res, next))
 
 module.exports = route
