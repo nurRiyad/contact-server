@@ -9,3 +9,4 @@
 ✅ Add hashing for password
 ✅ Add jwt token
 📋 Add validation
+📋 Handle error properly
