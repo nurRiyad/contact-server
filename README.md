@@ -2,11 +2,11 @@
 
 ### Todo
 
-[x] Add router
-✅ Add model
-✅ Add controller
-✅ Add auth middleware
-✅ Add hashing for password
-✅ Add jwt token
-📋 Add validation
-📋 Handle error properly
+- [x] Add router
+- [x] Add model
+- [x] Add controller
+- [x] Add auth middleware
+- [x] Add hashing for password
+- [x] Add jwt token
+- [ ] Add validation
+- [ ] Handle error properly
