@@ -2,7 +2,7 @@
 
 ### Todo
 
-✅ Add router
+[x] Add router
 ✅ Add model
 ✅ Add controller
 ✅ Add auth middleware
