@@ -1,4 +1,5 @@
 const Contract = require('../model/contract')
+const joi = require('joi')
 
 // Get all the contract
 const getAllContract = async (req, res, next) => {
@@ -13,8 +14,15 @@ const getAllContract = async (req, res, next) => {
 // Add a new contract
 const addANewContract = async (req, res, next) => {
   try {
+    const schema = joi.object({
+      number: joi.string().email().required(),
+      name: joi.string().min(3).required(),
+      address: joi.string()
+    })
+
     const { number, name, address } = req.body || {}
-    if (!number || !name) next({ status: 422, message: 'Bad Request' })
+    const { error } = schema.validate({ number, name, address })
+    if (error) next({ status: 400, message: error.message || 'Bad Request' })
     else {
       const contract = new Contract({ number, name, address })
       const data = await contract.save()
@@ -41,8 +49,14 @@ const getAContract = async (req, res, next) => {
 // Update a contract
 const updateAContract = async (req, res, next) => {
   try {
+    const schema = joi.object({
+      name: joi.string().min(3),
+      address: joi.string()
+    })
+
     const { name, address } = req.body
-    if (!name && !address) next({ status: 400, message: 'Bad request' })
+    const { error } = schema.validate({ name, address })
+    if (error) next({ status: 400, message: error.message || 'Bad request' })
     else {
       const { contractId } = req.params
       const contract = await Contract.findOneAndUpdate(

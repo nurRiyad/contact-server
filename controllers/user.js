@@ -1,4 +1,5 @@
 const User = require('../model/user')
+const joi = require('joi')
 
 const getUser = async (req, res, next) => {
   try {
@@ -13,8 +14,15 @@ const getUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   try {
+    const schema = joi.object({
+      email: joi.string().email().required(),
+      password: joi.string().min(4),
+      name: joi.string().min(3).alphanum()
+    })
+
     const { name, password, email } = req.body
-    if (!name && !password) next({ status: 400, message: 'Bad request' })
+    const { error } = schema.validate({ email, password, name })
+    if (error) next({ status: 400, message: error.message || 'Bad request' })
     else {
       const user = await User.findOneAndUpdate({ email }, { name, password }, { returnDocument: 'after' })
       if (user) res.send(user)

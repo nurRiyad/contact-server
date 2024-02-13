@@ -17,7 +17,7 @@ const handleSignup = async (req, res, next) => {
     if (error)
       next({
         status: 400,
-        message: error.message || 'Band request'
+        message: error.message || 'Bad request'
       })
     else {
       const hashedPass = hashAString(password)
