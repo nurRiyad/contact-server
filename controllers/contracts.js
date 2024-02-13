@@ -15,7 +15,7 @@ const getAllContract = async (req, res, next) => {
 const addANewContract = async (req, res, next) => {
   try {
     const schema = joi.object({
-      number: joi.string().email().required(),
+      number: joi.string().length(11).required(),
       name: joi.string().min(3).required(),
       address: joi.string()
     })
