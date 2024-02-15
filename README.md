@@ -8,7 +8,7 @@
 - [x] Add auth middleware
 - [x] Add hashing for password
 - [x] Add jwt token
-- [ ] Add validation
+- [x] Add validation
 - [ ] Handle error properly
 - [ ] Add proper logger
 - [ ] Separate prod vs dev end
