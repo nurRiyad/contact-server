@@ -12,3 +12,4 @@
 - [ ] Handle error properly
 - [ ] Add proper logger
 - [ ] Separate prod vs dev end
+- [ ] Add test

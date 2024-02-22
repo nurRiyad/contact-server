@@ -26,18 +26,64 @@ Content-Type: application/json
 ###
 GET  http://localhost:3000/api/v1/contract
 Content-Type: application/json
-Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJpeWFkM0BnbWFpbC5jb20iLCJ1c2VybmFtZSI6InJpYXlkIiwiaWF0IjoxNzA3ODUyMTIzfQ.wylZhmy1OnHpCwCF-bxS1JOe6JR98Clbd0BYfOtSaDQ; Path=/; HttpOnly
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJpeWFkM0BnbWFpbC5jb20iLCJ1c2VybmFtZSI6InJpYXlkIiwiaWF0IjoxNzA4NjI2ODM1fQ.Mn6qlBBixxIP5Xf5zwrqKqsp9j6M2FUzhsb2xd2RKCQ; Path=/; HttpOnly
 Content-Type: application/json; charset=utf-8
 
 
 ###
 POST  http://localhost:3000/api/v1/contract
 Content-Type: application/json
-Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJpeWFkM0BnbWFpbC5jb20iLCJ1c2VybmFtZSI6InJpYXlkIiwiaWF0IjoxNzA3ODUyMTIzfQ.wylZhmy1OnHpCwCF-bxS1JOe6JR98Clbd0BYfOtSaDQ; Path=/; HttpOnly
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJpeWFkM0BnbWFpbC5jb20iLCJ1c2VybmFtZSI6InJpYXlkIiwiaWF0IjoxNzA4NjI2ODM1fQ.Mn6qlBBixxIP5Xf5zwrqKqsp9j6M2FUzhsb2xd2RKCQ; Path=/; HttpOnly
 
 
 {
-  "number": "01730238192",
+  "number": "02730338193",
   "name": "riyad",
   "address": "Randpur"
 }
+
+###
+GET   http://localhost:3000/api/v1/contract/02730338193
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJpeWFkM0BnbWFpbC5jb20iLCJ1c2VybmFtZSI6InJpYXlkIiwiaWF0IjoxNzA4NjI2ODM1fQ.Mn6qlBBixxIP5Xf5zwrqKqsp9j6M2FUzhsb2xd2RKCQ; Path=/; HttpOnly
+
+
+###
+PATCH   http://localhost:3000/api/v1/contract/02730338193
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJpeWFkM0BnbWFpbC5jb20iLCJ1c2VybmFtZSI6InJpYXlkIiwiaWF0IjoxNzA4NjI2ODM1fQ.Mn6qlBBixxIP5Xf5zwrqKqsp9j6M2FUzhsb2xd2RKCQ; Path=/; HttpOnly
+
+{
+  
+  "name": "riyad1133"
+ 
+}
+
+
+
+###
+DELETE    http://localhost:3000/api/v1/contract/02730338193
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJpeWFkM0BnbWFpbC5jb20iLCJ1c2VybmFtZSI6InJpYXlkIiwiaWF0IjoxNzA4NjI2ODM1fQ.Mn6qlBBixxIP5Xf5zwrqKqsp9j6M2FUzhsb2xd2RKCQ; Path=/; HttpOnly
+
+
+###
+GET     http://localhost:3000/api/v1/user
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJpeWFkM0BnbWFpbC5jb20iLCJ1c2VybmFtZSI6InJpYXlkIiwiaWF0IjoxNzA4NjI2ODM1fQ.Mn6qlBBixxIP5Xf5zwrqKqsp9j6M2FUzhsb2xd2RKCQ; Path=/; HttpOnly
+
+
+###
+PATCH     http://localhost:3000/api/v1/user
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJpeWFkM0BnbWFpbC5jb20iLCJ1c2VybmFtZSI6InJpYXlkIiwiaWF0IjoxNzA4NjI2ODM1fQ.Mn6qlBBixxIP5Xf5zwrqKqsp9j6M2FUzhsb2xd2RKCQ; Path=/; HttpOnly
+
+{
+  "username": "riayd"
+}
+
+
+###
+DELETE     http://localhost:3000/api/v1/user
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJpeWFkM0BnbWFpbC5jb20iLCJ1c2VybmFtZSI6InJpYXlkIiwiaWF0IjoxNzA4NjI2ODM1fQ.Mn6qlBBixxIP5Xf5zwrqKqsp9j6M2FUzhsb2xd2RKCQ; Path=/; HttpOnly
