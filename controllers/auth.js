@@ -6,13 +6,13 @@ const hashAString = require('../utils/hash')
 const handleSignup = async (req, res, next) => {
   try {
     const schema = joi.object({
+      username: joi.string().min(3).alphanum().required(),
       email: joi.string().email().required(),
-      password: joi.string().min(4).required(),
-      username: joi.string().min(3).alphanum().required()
+      password: joi.string().min(4).required()
     })
 
     const { email, username, password } = req.body
-    const { error } = schema.validate({ email, username, password })
+    const { error } = schema.validate({ username, email, password })
 
     if (error)
       next({
@@ -25,7 +25,7 @@ const handleSignup = async (req, res, next) => {
       const user = new User({ email, username, password: hashedPass })
       const data = await user.save()
 
-      const payload = { email: data.email, username: data.username }
+      const payload = { email: data.email, username: data.username, createdAt: data.createdAt, uid: data._id }
       const key = jwt.sign(payload, process.env.JWT_SECRET)
       res.cookie('accessToken', key, { httpOnly: true })
       res.json(payload)
@@ -56,7 +56,7 @@ const handleLogin = async (req, res, next) => {
       const user = await User.findOne({ email, password: hashedPass })
 
       if (user) {
-        const payload = { email: user.email, username: user.username }
+        const payload = { email: user.email, username: user.username, createdAt: user.createdAt, uid: user._id }
         const key = jwt.sign(payload, process.env.JWT_SECRET)
         res.cookie('accessToken', key, { httpOnly: true })
         res.json(payload)

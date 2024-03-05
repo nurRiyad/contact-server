@@ -28,7 +28,7 @@ const updateUser = async (req, res, next) => {
       const user = await User.findOneAndUpdate(
         { email: loginUserEmail },
         { username, password: hashAString(password) },
-        { returnDocument: 'after' }
+        { returnDocument: 'after', projection: { __v: 0, password: 0 } }
       )
       if (user) res.send(user)
       else next({ status: 404, message: 'User not found' })
@@ -41,7 +41,7 @@ const updateUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     const { userId } = req.params
-    const contract = await User.findOneAndDelete({ id: userId })
+    const contract = await User.findOneAndDelete({ id: userId }, { projection: { __v: 0, password: 0 } })
     if (contract) res.send(contract)
     else next({ status: 404, message: 'Contract not found' })
   } catch (error) {
