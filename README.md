@@ -10,6 +10,7 @@
 - [x] Add jwt token
 - [x] Add validation
 - [ ] Handle error properly
-- [ ] Add proper logger
-- [ ] Separate prod vs dev end
+- [x] Add proper logger
+- [ ] Show different error on prod and dev
 - [ ] Add test
+- [ ] Use esm remove common js
