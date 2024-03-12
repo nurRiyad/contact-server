@@ -11,6 +11,15 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.3",
+    "morgan": "^1.10.0"
+  },
   "devDependencies": {
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
@@ -20,13 +29,5 @@
     "eslint-plugin-promise": "^6.1.1",
     "nodemon": "^3.0.2",
     "prettier": "3.1.1"
-  },
-  "dependencies": {
-    "cookie-parser": "^1.4.6",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "joi": "^17.11.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.0.3"
   }
 }

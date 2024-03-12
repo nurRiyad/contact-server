@@ -2,6 +2,7 @@ const express = require('express')
 const apiRoutes = require('./routes')
 const initMongoDb = require('./utils/initMongo')
 const cookieParser = require('cookie-parser')
+const morgan = require('morgan')
 
 // for reading .env file
 require('dotenv').config()
@@ -12,10 +13,12 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))
+app.use(morgan('tiny'))
 
 // connect mongodb
 initMongoDb()
 
+// all available routes
 app.use('/api/v1', apiRoutes)
 
 // Catch all route
