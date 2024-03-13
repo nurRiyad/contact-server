@@ -28,10 +28,16 @@ app.use((req, res, next) => {
 
 // Error Handler
 app.use((err, req, res, next) => {
-  res.status(err.status || 500)
+  const statusCode = err.status || 500
+
+  // don't show internal server error msg in prod server
+  const devErrMsg = err.message || 'Internal Server Error'
+  const prodErrMsg = statusCode === 500 ? 'Internal Server Error' : err.message ? err.message : 'Internal Server Error'
+
+  res.status(statusCode)
   res.send({
-    status: err.status || 500,
-    message: err.message || 'Internal Server Error'
+    status: statusCode,
+    message: process.env.NODE_ENV === 'development' ? devErrMsg : prodErrMsg
   })
 })
 
