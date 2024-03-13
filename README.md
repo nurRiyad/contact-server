@@ -9,8 +9,8 @@
 - [x] Add hashing for password
 - [x] Add jwt token
 - [x] Add validation
-- [ ] Handle error properly
+- [x] Handle error properly
 - [x] Add proper logger
-- [ ] Show different error on prod and dev
+- [x] Show different error on prod and dev
 - [ ] Add test
 - [ ] Use esm remove common js
