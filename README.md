@@ -12,5 +12,5 @@
 - [x] Handle error properly
 - [x] Add proper logger
 - [x] Show different error on prod and dev
+- [x] Use esm remove common js
 - [ ] Add test
-- [ ] Use esm remove common js
