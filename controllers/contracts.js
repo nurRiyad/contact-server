@@ -1,8 +1,8 @@
-const Contract = require('../model/contract')
-const joi = require('joi')
+import joi from 'joi'
+import Contract from '../model/contract.js'
 
 // Get all the contract
-const getAllContract = async (req, res, next) => {
+export const getAllContract = async (req, res, next) => {
   try {
     const userId = req.user.uid
     const users = await Contract.find({ userId }, { __v: 0, userId: 0 })
@@ -13,7 +13,7 @@ const getAllContract = async (req, res, next) => {
 }
 
 // Add a new contract
-const addANewContract = async (req, res, next) => {
+export const addANewContract = async (req, res, next) => {
   try {
     const schema = joi.object({
       number: joi.string().length(11).required(),
@@ -38,7 +38,7 @@ const addANewContract = async (req, res, next) => {
 }
 
 // Get a specific contract
-const getAContract = async (req, res, next) => {
+export const getAContract = async (req, res, next) => {
   try {
     const { contractId } = req.params
     const userId = req.user.uid
@@ -52,7 +52,7 @@ const getAContract = async (req, res, next) => {
 }
 
 // Update a contract
-const updateAContract = async (req, res, next) => {
+export const updateAContract = async (req, res, next) => {
   try {
     const schema = joi.object({
       number: joi.string().length(11).required(),
@@ -79,7 +79,7 @@ const updateAContract = async (req, res, next) => {
 }
 
 // delete a contract
-const deleteAContract = async (req, res, next) => {
+export const deleteAContract = async (req, res, next) => {
   try {
     const { contractId } = req.params
     const userId = req.user.uid
@@ -94,5 +94,3 @@ const deleteAContract = async (req, res, next) => {
     next(error)
   }
 }
-
-module.exports = { getAllContract, addANewContract, getAContract, updateAContract, deleteAContract }

@@ -1,12 +1,12 @@
-const express = require('express')
-const contract = require('./contract')
-const user = require('./user')
-const auth = require('./auth')
+import express from 'express'
+import authRoutes from './auth.js'
+import contractRoutes from './contract.js'
+import userRoutes from './user.js'
 
-const router = express.Router()
+const apiRoutes = express.Router()
 
-router.use('/auth', auth)
-router.use('/user', user)
-router.use('/contract', contract)
+apiRoutes.use('/auth', authRoutes)
+apiRoutes.use('/user', userRoutes)
+apiRoutes.use('/contract', contractRoutes)
 
-module.exports = router
+export default apiRoutes

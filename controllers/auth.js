@@ -1,9 +1,11 @@
-const User = require('../model/user')
-const jwt = require('jsonwebtoken')
-const joi = require('joi')
-const hashAString = require('../utils/hash')
+import joi from 'joi'
+import jwt from 'jsonwebtoken'
+import User from '../model/user.js'
+import { hashAString } from '../utils/hash.js'
 
-const handleSignup = async (req, res, next) => {
+export const handleSignup = async (req, res, next) => {
+  console.log('I am here')
+
   try {
     const schema = joi.object({
       username: joi.string().min(3).alphanum().required(),
@@ -36,7 +38,7 @@ const handleSignup = async (req, res, next) => {
   }
 }
 
-const handleLogin = async (req, res, next) => {
+export const handleLogin = async (req, res, next) => {
   try {
     const schema = joi.object({
       email: joi.string().email().required(),
@@ -67,7 +69,7 @@ const handleLogin = async (req, res, next) => {
   }
 }
 
-const handleLogout = async (req, res, next) => {
+export const handleLogout = async (req, res, next) => {
   try {
     res.clearCookie('accessToken')
     res.json({
@@ -77,5 +79,3 @@ const handleLogout = async (req, res, next) => {
     next(error)
   }
 }
-
-module.exports = { handleSignup, handleLogin, handleLogout }

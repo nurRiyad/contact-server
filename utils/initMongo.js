@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
-const initMongoDb = async () => {
+export const initMongoDb = async () => {
   try {
     await mongoose.connect('mongodb://0.0.0.0:27017/test')
     console.log('Connected To Mongodb')
@@ -8,5 +8,3 @@ const initMongoDb = async () => {
     console.error('Cannot Connect to mongodb')
   }
 }
-
-module.exports = initMongoDb

@@ -1,8 +1,8 @@
-const User = require('../model/user')
-const joi = require('joi')
-const hashAString = require('../utils/hash')
+import joi from 'joi'
+import User from '../model/user.js'
+import { hashAString } from '../utils/hash.js'
 
-const getUser = async (req, res, next) => {
+export const getUser = async (req, res, next) => {
   try {
     const { email } = req.user
     const user = await User.findOne({ email }, { password: 0, __v: 0 })
@@ -13,7 +13,7 @@ const getUser = async (req, res, next) => {
   }
 }
 
-const updateUser = async (req, res, next) => {
+export const updateUser = async (req, res, next) => {
   try {
     const schema = joi.object({
       username: joi.string().min(3).alphanum(),
@@ -38,7 +38,7 @@ const updateUser = async (req, res, next) => {
   }
 }
 
-const deleteUser = async (req, res, next) => {
+export const deleteUser = async (req, res, next) => {
   try {
     const { userId } = req.params
     const contract = await User.findOneAndDelete({ id: userId }, { projection: { __v: 0, password: 0 } })
@@ -48,5 +48,3 @@ const deleteUser = async (req, res, next) => {
     next(error)
   }
 }
-
-module.exports = { getUser, updateUser, deleteUser }

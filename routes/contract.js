@@ -1,22 +1,28 @@
-const express = require('express')
-const auth = require('../middleware/auth')
-const contractController = require('../controllers/contracts')
+import express from 'express'
+import {
+  addANewContract,
+  deleteAContract,
+  getAContract,
+  getAllContract,
+  updateAContract
+} from '../controllers/contracts.js'
+import auth from '../middleware/auth.js'
 
-const route = express.Router()
+const contractRoutes = express.Router()
 
 // Get all the contract
-route.get('/', auth, async (req, res, next) => await contractController.getAllContract(req, res, next))
+contractRoutes.get('/', auth, async (req, res, next) => await getAllContract(req, res, next))
 
 // Add a new contract
-route.post('/', auth, async (req, res, next) => await contractController.addANewContract(req, res, next))
+contractRoutes.post('/', auth, async (req, res, next) => await addANewContract(req, res, next))
 
 // Get a specific contract
-route.get('/:contractId', auth, async (req, res, next) => await contractController.getAContract(req, res, next))
+contractRoutes.get('/:contractId', auth, async (req, res, next) => await getAContract(req, res, next))
 
 // Update a contract
-route.patch('/:contractId', auth, async (req, res, next) => await contractController.updateAContract(req, res, next))
+contractRoutes.patch('/:contractId', auth, async (req, res, next) => await updateAContract(req, res, next))
 
 // delete a contract
-route.delete('/:contractId', auth, async (req, res, next) => await contractController.deleteAContract(req, res, next))
+contractRoutes.delete('/:contractId', auth, async (req, res, next) => await deleteAContract(req, res, next))
 
-module.exports = route
+export default contractRoutes

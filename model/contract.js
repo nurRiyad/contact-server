@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const contractSchema = new mongoose.Schema({
   name: {
@@ -32,7 +32,7 @@ contractSchema.index({ name: 1, userId: 1 }, { unique: true })
 
 const Contract = mongoose.model('Contract', contractSchema)
 
-module.exports = Contract
+export default Contract
 
 // schemas are like class
 // models are like object

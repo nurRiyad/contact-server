@@ -1,11 +1,12 @@
-const express = require('express')
-const apiRoutes = require('./routes')
-const initMongoDb = require('./utils/initMongo')
-const cookieParser = require('cookie-parser')
-const morgan = require('morgan')
+import cookieParser from 'cookie-parser'
+import dotenv from 'dotenv'
+import express from 'express'
+import morgan from 'morgan'
+import apiRoutes from './routes/index.js'
+import { initMongoDb } from './utils/initMongo.js'
 
 // for reading .env file
-require('dotenv').config()
+dotenv.config()
 
 // init express server
 const app = express()

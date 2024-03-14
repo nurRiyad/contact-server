@@ -1,13 +1,13 @@
-const express = require('express')
-const auth = require('../middleware/auth')
-const userController = require('../controllers/user')
+import express from 'express'
+import { deleteUser, getUser, updateUser } from '../controllers/user.js'
+import auth from '../middleware/auth.js'
 
-const route = express.Router()
+const userRoutes = express.Router()
 
-route.get('/', auth, async (req, res, next) => userController.getUser(req, res, next))
+userRoutes.get('/', auth, async (req, res, next) => getUser(req, res, next))
 
-route.patch('/', auth, async (req, res, next) => userController.updateUser(req, res, next))
+userRoutes.patch('/', auth, async (req, res, next) => updateUser(req, res, next))
 
-route.delete('/', auth, async (req, res, next) => userController.deleteUser(req, res, next))
+userRoutes.delete('/', auth, async (req, res, next) => deleteUser(req, res, next))
 
-module.exports = route
+export default userRoutes
