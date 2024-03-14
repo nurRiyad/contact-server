@@ -13,4 +13,5 @@
 - [x] Add proper logger
 - [x] Show different error on prod and dev
 - [x] Use esm remove common js
+- [ ] Add docker and docker compose
 - [ ] Add test
