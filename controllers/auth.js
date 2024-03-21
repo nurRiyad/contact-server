@@ -4,8 +4,6 @@ import User from '../model/user.js'
 import { hashAString } from '../utils/hash.js'
 
 export const handleSignup = async (req, res, next) => {
-  console.log('I am here')
-
   try {
     const schema = joi.object({
       username: joi.string().min(3).alphanum().required(),

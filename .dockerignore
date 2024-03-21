@@ -1,2 +1,4 @@
-node_modules
-yarn*.log
+./node_modules
+Dockerfile
+.dockerignore
+docker-compose.yml

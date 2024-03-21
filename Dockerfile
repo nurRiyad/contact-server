@@ -1,4 +1,4 @@
-FROM node:20
+FROM node:20-alpine
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -7,13 +7,10 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm ci
 
 # Copy all files
 COPY . .
 
-# Expose port 3000
-EXPOSE 5173
-
 # Run app
-CMD [ "node", "main.js" ]
+CMD [ "npm", "start" ] 

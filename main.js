@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   const statusCode = err.status || 500
 
-  // don't show internal server error msg in prod server
+  // don't show server error msg in prod server
   const devErrMsg = err.message || 'Internal Server Error'
   const prodErrMsg = statusCode === 500 ? 'Internal Server Error' : err.message ? err.message : 'Internal Server Error'
 
