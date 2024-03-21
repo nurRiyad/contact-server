@@ -1,5 +1,7 @@
 # Contract Server
 
+An api server built with mongodb to manage your personal phone contracts
+
 ### Local Development
 
 1. Run mongodb locally or in docker using `docker run -d -p 27017:27017 mongo`
