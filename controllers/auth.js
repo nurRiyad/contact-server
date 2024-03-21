@@ -27,7 +27,11 @@ export const handleSignup = async (req, res, next) => {
 
       const payload = { email: data.email, username: data.username, createdAt: data.createdAt, uid: data._id }
       const key = jwt.sign(payload, process.env.JWT_SECRET)
-      res.cookie('accessToken', key, { httpOnly: true })
+      res.cookie('accessToken', key, {
+        httpOnly: true,
+        sameSite: true,
+        expires: new Date(Date.now() + 8 * 3600000)
+      })
       res.json(payload)
     }
   } catch (error) {
