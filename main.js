@@ -1,6 +1,7 @@
 import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
 import express from 'express'
+import helmet from 'helmet'
 import morgan from 'morgan'
 import apiRoutes from './routes/index.js'
 import { initMongoDb } from './utils/initMongo.js'
@@ -15,6 +16,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('tiny'))
+app.use(helmet())
 
 // connect mongodb
 initMongoDb()
